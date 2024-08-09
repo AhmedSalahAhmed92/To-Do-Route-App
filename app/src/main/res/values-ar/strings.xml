@@ -1,5 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">To Do</string>
+    <string name="app_name">المهام</string>
     <string name="splash_screen_logo">Splash screen logo</string>
     <string name="splash_screen_credit">Splash screen credit</string>
 </resources>

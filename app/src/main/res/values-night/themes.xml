@@ -1,7 +1,13 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
-    <style name="Base.Theme.ToDo" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.ToDo" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="android:statusBarColor">@color/black_blue</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+
+    <style name="SplashScreen">
+        <item name="android:background">@color/black_blue</item>
     </style>
 </resources>

@@ -2,4 +2,9 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="lime">#DFECDB</color>
+    <color name="black_blue">#060E1E</color>
+
+    <color name="main_bg">@color/lime</color>
 </resources>
