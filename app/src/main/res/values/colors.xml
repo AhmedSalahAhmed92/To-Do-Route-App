@@ -5,6 +5,8 @@
 
     <color name="lime">#DFECDB</color>
     <color name="black_blue">#060E1E</color>
+    <color name="blue">#5D9CEC</color>
+    <color name="grey">#C8C9CB</color>
 
     <color name="main_bg">@color/lime</color>
 </resources>

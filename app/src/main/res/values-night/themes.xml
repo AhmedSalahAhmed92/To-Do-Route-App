@@ -10,4 +10,14 @@
     <style name="SplashScreen">
         <item name="android:background">@color/black_blue</item>
     </style>
+
+    <style name="main_background_color">
+        <item name="android:background">@color/black_blue</item>
+    </style>
+
+    <style name="toolbar_title_style">
+        <item name="android:textColor">@color/black</item>
+        <item name="fontFamily">@font/poppins_bold</item>
+        <item name="android:textSize">22sp</item>
+    </style>
 </resources>
