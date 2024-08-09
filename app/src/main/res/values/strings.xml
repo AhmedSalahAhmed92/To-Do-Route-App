@@ -2,4 +2,8 @@
     <string name="app_name">To Do</string>
     <string name="splash_screen_logo">Splash screen logo</string>
     <string name="splash_screen_credit">Splash screen credit</string>
+    <string name="to_do_list">To Do List</string>
+    <string name="floating_action_button">Floating action button</string>
+    <string name="tasks">Tasks</string>
+    <string name="settings">Settings</string>
 </resources>
