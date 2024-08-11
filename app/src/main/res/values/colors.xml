@@ -9,4 +9,6 @@
     <color name="grey">#C8C9CB</color>
 
     <color name="main_bg">@color/lime</color>
+    <color name="black_blue_variant">#141922</color>
+    <color name="black_red">#363636</color>
 </resources>

@@ -26,5 +26,16 @@
         <item name="android:textSize">22sp</item>
     </style>
 
+    <style name="calendar_background_color">
+        <item name="android:background">@drawable/calendar_shape_bg</item>
+    </style>
+
+    <style name="calendar_text_style">
+        <item name="android:textColor">@color/black_red</item>
+        <item name="fontFamily">@font/roboto</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="Theme.ToDo" parent="Base.Theme.ToDo" />
 </resources>
