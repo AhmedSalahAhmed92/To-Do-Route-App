@@ -1,12 +1,13 @@
-package com.example.todo
+package com.example.todo.ui.fragment
 
 import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
+import androidx.fragment.app.Fragment
+import com.example.todo.R
 import com.example.todo.adapter.CalendarDayContainer
 import com.example.todo.adapter.CalendarMonthHeaderContainer
 import com.example.todo.databinding.FragmentTodoTasksBinding
@@ -14,10 +15,8 @@ import com.kizitonwose.calendar.core.Week
 import com.kizitonwose.calendar.core.WeekDay
 import com.kizitonwose.calendar.core.atStartOfMonth
 import com.kizitonwose.calendar.core.firstDayOfWeekFromLocale
-import com.kizitonwose.calendar.core.yearMonth
 import com.kizitonwose.calendar.view.WeekDayBinder
 import com.kizitonwose.calendar.view.WeekHeaderFooterBinder
-import com.kizitonwose.calendar.view.WeekScrollListener
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.TextStyle
@@ -46,9 +45,7 @@ class TodoTasksFragment : Fragment() {
 
     private fun initWeekCalendarAdapter() {
         setupWeekCalendarView()
-
         bindMonthYearCalendarView()
-
         bindWeekCalendarView()
     }
 
