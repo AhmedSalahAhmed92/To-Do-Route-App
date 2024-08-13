@@ -6,13 +6,23 @@
     android:layout_height="match_parent"
     tools:context=".TodoTasksFragment">
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/blue"
+        app:layout_constraintHeight_percent="0.1"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.kizitonwose.calendar.view.WeekCalendarView
         android:id="@+id/calendarView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:cv_daySize="freeForm"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        app:cv_daySize="seventhWidth"
         app:cv_dayViewResource="@layout/item_calendar_day"
+        app:cv_scrollPaged="true"
+        app:cv_weekHeaderResource="@layout/calendar_month_header"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -21,5 +31,4 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHeight_percent="0.7" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
