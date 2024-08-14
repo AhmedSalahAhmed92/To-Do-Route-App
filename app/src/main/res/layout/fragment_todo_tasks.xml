@@ -20,15 +20,19 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         app:cv_daySize="seventhWidth"
+        android:orientation="horizontal"
         app:cv_dayViewResource="@layout/item_calendar_day"
         app:cv_scrollPaged="true"
         app:cv_weekHeaderResource="@layout/calendar_month_header"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/rv_tasks"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_task"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHeight_percent="0.7" />
 </androidx.constraintlayout.widget.ConstraintLayout>

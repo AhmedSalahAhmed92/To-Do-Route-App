@@ -15,4 +15,5 @@
 
     <color name="main_bg">@color/lime</color>
     <color name="calendar_txt">@color/black_blue</color>
+    <color name="item_task_bg">@color/white</color>
 </resources>
