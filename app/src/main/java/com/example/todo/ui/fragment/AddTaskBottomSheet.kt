@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.todo.Constants.Companion.getTodayDate
 import com.example.todo.R
+import com.example.todo.callback.OnTaskAddedListener
 import com.example.todo.databinding.FragmentAddTaskBinding
 import com.example.todo.db.Task
 import com.example.todo.db.TaskDatabase
@@ -18,6 +19,7 @@ class AddTaskBottomSheet : BottomSheetDialogFragment() {
     private lateinit var calendar: Calendar
     private lateinit var taskTitle: String
     private lateinit var taskDetails: String
+    var onAddedTaskListener: OnTaskAddedListener? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,6 +56,7 @@ class AddTaskBottomSheet : BottomSheetDialogFragment() {
         binding.btnAddTask.setOnClickListener {
             if (!validateTextFields()) return@setOnClickListener
             createToDoTask()
+            onAddedTaskListener?.onTaskAdded()
             dismiss()
         }
     }

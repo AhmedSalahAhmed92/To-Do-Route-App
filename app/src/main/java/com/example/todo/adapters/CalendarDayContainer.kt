@@ -1,4 +1,4 @@
-package com.example.todo.adapter
+package com.example.todo.adapters
 
 import android.view.View
 import android.widget.TextView

@@ -2,5 +2,5 @@
 <resources>
     <color name="main_bg">@color/black_blue</color>
     <color name="calendar_txt">@color/white</color>
-    <color name="item_task_bg">@color/black_blue</color>
+    <color name="item_task_bg">@color/black_blue_variant</color>
 </resources>

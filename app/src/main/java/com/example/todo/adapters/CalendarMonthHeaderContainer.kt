@@ -1,8 +1,6 @@
-package com.example.todo.adapter
+package com.example.todo.adapters
 
 import android.view.View
-import android.widget.TextView
-import com.example.todo.R
 import com.example.todo.databinding.CalendarMonthHeaderBinding
 import com.kizitonwose.calendar.view.ViewContainer
 

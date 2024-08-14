@@ -8,9 +8,12 @@ import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.example.todo.R
-import com.example.todo.adapter.CalendarDayContainer
-import com.example.todo.adapter.CalendarMonthHeaderContainer
+import com.example.todo.adapters.CalendarDayContainer
+import com.example.todo.adapters.CalendarMonthHeaderContainer
+import com.example.todo.adapters.TaskAdapter
 import com.example.todo.databinding.FragmentTodoTasksBinding
+import com.example.todo.db.Task
+import com.example.todo.db.TaskDatabase
 import com.kizitonwose.calendar.core.Week
 import com.kizitonwose.calendar.core.WeekDay
 import com.kizitonwose.calendar.core.atStartOfMonth
@@ -28,6 +31,7 @@ class TodoTasksFragment : Fragment() {
     private lateinit var binding: FragmentTodoTasksBinding
     private lateinit var calendar: Calendar
     private var selectedDate: WeekDay? = null
+    lateinit var adapter: TaskAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,12 +45,26 @@ class TodoTasksFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         calendar = Calendar.getInstance()
         initWeekCalendarAdapter()
+        initRecyclerView()
     }
 
     private fun initWeekCalendarAdapter() {
         setupWeekCalendarView()
         bindMonthYearCalendarView()
         bindWeekCalendarView()
+    }
+
+    private fun setupWeekCalendarView() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val currentDate = LocalDate.now()
+            val currentMonth = YearMonth.now()
+            val startDate = currentMonth.minusMonths(100).atStartOfMonth() // Adjust as needed
+            val endDate = currentMonth.plusMonths(100).atEndOfMonth() // Adjust as needed
+            val firstDayOfWeek =
+                firstDayOfWeekFromLocale(Locale.forLanguageTag("ar")) // Available from the library
+            binding.calendarView.setup(startDate, endDate, firstDayOfWeek)
+            binding.calendarView.scrollToWeek(currentDate)
+        }
     }
 
     private fun bindMonthYearCalendarView() {
@@ -115,17 +133,14 @@ class TodoTasksFragment : Fragment() {
         }
     }
 
-    private fun setupWeekCalendarView() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val currentDate = LocalDate.now()
-            val currentMonth = YearMonth.now()
-            val startDate = currentMonth.minusMonths(100).atStartOfMonth() // Adjust as needed
-            val endDate = currentMonth.plusMonths(100).atEndOfMonth() // Adjust as needed
-            val firstDayOfWeek =
-                firstDayOfWeekFromLocale(Locale.forLanguageTag("ar")) // Available from the library
-            binding.calendarView.setup(startDate, endDate, firstDayOfWeek)
-            binding.calendarView.scrollToWeek(currentDate)
-        }
+    private fun initRecyclerView() {
+        val tasksList = getAllTasks()
+        adapter = TaskAdapter(tasksList)
+        binding.rvTasks.adapter = adapter
+    }
+
+    fun getAllTasks(): List<Task> {
+        return TaskDatabase.getINSTANCE(requireContext()).getTaskDAO().getAllTasks()
     }
 
 }

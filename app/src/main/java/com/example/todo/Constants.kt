@@ -19,5 +19,9 @@ class Constants {
             return formatter.format(formattedDate)
         }
 
+        fun getDateTime() {
+            val timeFormatter = SimpleDateFormat.getDateTimeInstance()
+        }
+
     }
 }
