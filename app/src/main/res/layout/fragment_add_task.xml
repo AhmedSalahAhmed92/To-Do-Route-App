@@ -7,6 +7,7 @@
 
     <TextView
         android:id="@+id/tv_add_new_task"
+        style="@style/add_task_bottom_sheet_title_style"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginVertical="8dp"
@@ -17,74 +18,83 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/et_task_title"
+        android:id="@+id/til_task_title"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginVertical="8dp"
-        android:hint="Task Title"
+        android:hint="@string/task_title"
         app:endIconMode="clear_text"
-        app:errorEnabled="true"
-        app:helperText="*Required"
-        app:helperTextTextColor="@android:color/holo_red_dark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_add_new_task"
         app:layout_constraintWidth_percent="0.9">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edt_task_title"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:ellipsize="end"
+            android:inputType="text"
+            android:maxLines="1"
+            android:textColor="@color/calendar_txt"
+            android:textSize="16sp">
 
         </com.google.android.material.textfield.TextInputEditText>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/et_task_details"
+        android:id="@+id/til_task_details"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginVertical="8dp"
-        android:hint="Task Details"
+        android:hint="@string/task_details"
         app:endIconMode="clear_text"
-        app:errorEnabled="true"
-        app:helperText="*Required"
-        app:helperTextTextColor="@android:color/holo_red_dark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/et_task_title"
+        app:layout_constraintTop_toBottomOf="@id/til_task_title"
         app:layout_constraintWidth_percent="0.9">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edt_task_details"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:ellipsize="end"
+            android:inputType="text"
+            android:maxLines="1"
+            android:textColor="@color/calendar_txt"
+            android:textSize="16sp">
 
         </com.google.android.material.textfield.TextInputEditText>
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/tv_select_date"
+        style="@style/add_task_bottom_select_date_style"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginVertical="8dp"
         android:gravity="start"
         android:text="@string/select_date"
-        app:layout_constraintEnd_toEndOf="@id/et_task_details"
-        app:layout_constraintStart_toStartOf="@id/et_task_details"
-        app:layout_constraintTop_toBottomOf="@id/et_task_details" />
+        app:layout_constraintEnd_toEndOf="@id/til_task_details"
+        app:layout_constraintStart_toStartOf="@id/til_task_details"
+        app:layout_constraintTop_toBottomOf="@id/til_task_details" />
 
     <TextView
         android:id="@+id/tv_selected_date_value"
+        style="@style/add_task_bottom_selected_date_value_style"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginVertical="8dp"
         android:gravity="center"
-        app:layout_constraintEnd_toEndOf="@id/et_task_details"
-        app:layout_constraintStart_toStartOf="@id/et_task_details"
+        app:layout_constraintEnd_toEndOf="@id/til_task_details"
+        app:layout_constraintStart_toStartOf="@id/til_task_details"
         app:layout_constraintTop_toBottomOf="@+id/tv_select_date"
         tools:text="27-12-2024" />
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_add_task"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginVertical="8dp"
@@ -94,8 +104,8 @@
         android:textColor="@color/white"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@id/et_task_details"
-        app:layout_constraintStart_toStartOf="@id/et_task_details"
+        app:layout_constraintEnd_toEndOf="@id/til_task_details"
+        app:layout_constraintStart_toStartOf="@id/til_task_details"
         app:layout_constraintTop_toBottomOf="@id/tv_selected_date_value" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

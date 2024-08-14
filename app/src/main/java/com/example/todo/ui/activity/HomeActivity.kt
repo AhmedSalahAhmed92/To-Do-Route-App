@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.todo.R
 import com.example.todo.databinding.ActivityHomeBinding
+import com.example.todo.ui.fragment.AddTaskBottomSheet
 import com.example.todo.ui.fragment.TodoTasksFragment
 
 class HomeActivity : AppCompatActivity() {
@@ -37,6 +38,10 @@ class HomeActivity : AppCompatActivity() {
                 }
                 selectedItemId = R.id.nav_tasks_list
             }
+        }
+        binding.fabAddTask.setOnClickListener {
+            val bottomSheet = AddTaskBottomSheet()
+                .show(supportFragmentManager, null)
         }
     }
 

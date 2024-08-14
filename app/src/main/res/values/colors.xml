@@ -7,6 +7,8 @@
     <color name="black_blue">#060E1E</color>
     <color name="blue">#5D9CEC</color>
     <color name="grey">#C8C9CB</color>
+    <color name="grey_variant">#C3C3C3</color>
+    <color name="grey_opacity_61">#9CA9A9A9</color>
 
     <color name="black_blue_variant">#141922</color>
     <color name="black_red">#363636</color>

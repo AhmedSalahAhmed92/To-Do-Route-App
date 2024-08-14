@@ -8,6 +8,11 @@
     <string name="settings">Settings</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="add_new_task">Add New Task</string>
-    <string name="select_date">Select Task Date</string>
+    <string name="select_date">Select Task Date :</string>
     <string name="add_task">Add Task</string>
+    <string name="task_title">Task Title</string>
+    <string name="task_details">Task Details</string>
+    <string name="title_is_required">*Title is required</string>
+    <string name="details_is_required">*Details is required</string>
+    <string name="required">*Required</string>
 </resources>
