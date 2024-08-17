@@ -32,9 +32,9 @@ import java.util.Locale
 
 class TodoTasksFragment : Fragment() {
     private lateinit var binding: FragmentTodoTasksBinding
-    private lateinit var calendar: Calendar
-    private var selectedDate: LocalDate? = null
-    lateinit var adapter: TaskAdapter
+    lateinit var calendar: Calendar
+    var selectedDate: LocalDate? = null
+    private lateinit var adapter: TaskAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -136,7 +136,7 @@ class TodoTasksFragment : Fragment() {
         }
     }
 
-    private fun getUpdatedTaskList(date: Date) {
+    fun getUpdatedTaskList(date: Date) {
         val filteredTaskList = filterTaskByDate(date)
         adapter.updateData(filteredTaskList)
     }

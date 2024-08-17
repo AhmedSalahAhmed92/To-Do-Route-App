@@ -1,4 +1,4 @@
-package com.example.todo.callback
+package com.example.todo.callbacks
 
 interface OnTaskAddedListener {
     fun onTaskAdded()

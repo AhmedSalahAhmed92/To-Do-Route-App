@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.todo.R
-import com.example.todo.callback.OnTaskAddedListener
+import com.example.todo.callbacks.OnTaskAddedListener
 import com.example.todo.databinding.ActivityHomeBinding
 import com.example.todo.ui.fragment.AddTaskBottomSheet
 import com.example.todo.ui.fragment.TodoSettingsFragment
@@ -20,6 +20,7 @@ class HomeActivity : AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
         intFragment()
+
         bottomNavigation()
     }
 
@@ -59,6 +60,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun onAddTaskFabClick() {
         binding.fabAddTask.setOnClickListener {
+            if (settingsFragment.isVisible) return@setOnClickListener
             val bottomSheet = AddTaskBottomSheet()
             bottomSheet.onAddedTaskListener = onTaskAddedListener()
             bottomSheet.show(supportFragmentManager, "add_task_bottom_sheet")
@@ -67,7 +69,11 @@ class HomeActivity : AppCompatActivity() {
 
     private fun onTaskAddedListener() = object : OnTaskAddedListener {
         override fun onTaskAdded() {
-            if (tasksListFragment.isVisible) tasksListFragment.getAllTasksFromDataBase()
+            if (tasksListFragment.isVisible)
+                if (tasksListFragment.selectedDate == null)
+                    tasksListFragment.getAllTasksFromDataBase()
+                else
+                    tasksListFragment.getUpdatedTaskList(tasksListFragment.calendar.time)
         }
     }
 }
