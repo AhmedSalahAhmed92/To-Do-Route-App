@@ -29,6 +29,10 @@
         </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
+    <include
+        android:id="@+id/content"
+        layout="@layout/content_home" />
+
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottomAppBar"
         android:layout_width="match_parent"
@@ -66,9 +70,5 @@
         android:src="@drawable/ic_add"
         android:tintMode="@color/white"
         app:layout_anchor="@id/bottomAppBar" />
-
-    <include
-        android:id="@+id/content"
-        layout="@layout/content_home" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

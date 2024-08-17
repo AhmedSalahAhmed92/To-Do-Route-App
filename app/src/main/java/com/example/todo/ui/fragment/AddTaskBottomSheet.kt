@@ -1,16 +1,19 @@
 package com.example.todo.ui.fragment
 
 import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.todo.Constants.Companion.getTodayDate
+import android.widget.Toast
 import com.example.todo.R
 import com.example.todo.callback.OnTaskAddedListener
+import com.example.todo.database.TaskDatabase
+import com.example.todo.database.entity.Task
 import com.example.todo.databinding.FragmentAddTaskBinding
-import com.example.todo.db.Task
-import com.example.todo.db.TaskDatabase
+import com.example.todo.utils.Constants.Companion.getTodayDate
+import com.example.todo.utils.clearTime
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import java.util.Calendar
 
@@ -19,6 +22,8 @@ class AddTaskBottomSheet : BottomSheetDialogFragment() {
     private lateinit var calendar: Calendar
     private lateinit var taskTitle: String
     private lateinit var taskDetails: String
+    private var isDateSelected = false
+    private var isTimeSelected = false
     var onAddedTaskListener: OnTaskAddedListener? = null
 
     override fun onCreateView(
@@ -30,11 +35,13 @@ class AddTaskBottomSheet : BottomSheetDialogFragment() {
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initCalendar()
-        displayCurrentDate()
+        //displayCurrentDate()
         onSelectDateClick()
+        onSelectTimeClick()
         onAddTaskBtnClick()
     }
 
@@ -52,9 +59,16 @@ class AddTaskBottomSheet : BottomSheetDialogFragment() {
         }
     }
 
+    private fun onSelectTimeClick() {
+        binding.tvSelectTime.setOnClickListener {
+            showTimePickerDialog()
+        }
+    }
+
     private fun onAddTaskBtnClick() {
         binding.btnAddTask.setOnClickListener {
             if (!validateTextFields()) return@setOnClickListener
+            calendar.clearTime()
             createToDoTask()
             onAddedTaskListener?.onTaskAdded()
             dismiss()
@@ -66,6 +80,8 @@ class AddTaskBottomSheet : BottomSheetDialogFragment() {
         taskDetails = binding.edtTaskDetails.text?.trim().toString()
         binding.tilTaskTitle.error = validateTitle(taskTitle)
         binding.tilTaskDetails.error = validateDetails(taskDetails)
+        if (!validateDate()) return false
+        if (!validateTime()) return false
         return validateTitle(taskTitle) == null && validateDetails(taskDetails) == null
     }
 
@@ -79,11 +95,28 @@ class AddTaskBottomSheet : BottomSheetDialogFragment() {
         return null
     }
 
+    private fun validateDate(): Boolean {
+        if (!isDateSelected) {
+            Toast.makeText(requireContext(), "*Date is required", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        return true
+    }
+
+    private fun validateTime(): Boolean {
+        if (!isTimeSelected) {
+            Toast.makeText(requireContext(), "*Time is required", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        return true
+    }
+
     private fun createToDoTask() {
         val task = Task(
             title = binding.edtTaskTitle.text?.trim().toString(),
             description = binding.edtTaskDetails.text?.trim().toString(),
-            date = binding.tvSelectedDateValue.text.toString(),
+            date = calendar.time,
+            time = binding.tvSelectedTimeValue.text.toString(),
             isDone = false
         )
         TaskDatabase.getINSTANCE(requireContext()).getTaskDAO().insertTask(task)
@@ -92,6 +125,7 @@ class AddTaskBottomSheet : BottomSheetDialogFragment() {
     private fun showDatePickerDialog() {
         val datePickerDialog = DatePickerDialog(requireContext())
         datePickerDialog.setOnDateSetListener { view, year, month, dayOfMonth ->
+            isDateSelected = true
             calendar.apply {
                 set(Calendar.YEAR, year)
                 set(Calendar.MONTH, month)
@@ -100,12 +134,38 @@ class AddTaskBottomSheet : BottomSheetDialogFragment() {
             displaySelectedDate(dayOfMonth, month, year)
         }
         datePickerDialog.show()
-
     }
 
     private fun displaySelectedDate(dayOfMonth: Int, month: Int, year: Int) {
         val showDateFormat = "$dayOfMonth/${month + 1}/$year"
         binding.tvSelectedDateValue.text = showDateFormat
+    }
+
+    private fun showTimePickerDialog() {
+        val timePickerDialog =
+            TimePickerDialog(
+                requireContext(),
+                { view, hourOfDay, minute ->
+                    isTimeSelected = true
+                    calendar.apply {
+                        set(Calendar.HOUR_OF_DAY, hourOfDay)
+                        set(Calendar.MINUTE, minute)
+                    }
+                    displaySelectedTime(hourOfDay, minute)
+                },
+                calendar.get(Calendar.HOUR_OF_DAY),
+                calendar.get(Calendar.MINUTE),
+                false
+            )
+        timePickerDialog.show()
+    }
+
+    private fun displaySelectedTime(hourOfDay: Int, minute: Int) {
+        var hour = hourOfDay % 12
+        if (hour == 0) hour = 12
+        val amOrPm = if (hourOfDay < 12) "AM" else "PM"
+        val showTimeFormat = "$hour:$minute $amOrPm"
+        binding.tvSelectedTimeValue.text = showTimeFormat
     }
 
 

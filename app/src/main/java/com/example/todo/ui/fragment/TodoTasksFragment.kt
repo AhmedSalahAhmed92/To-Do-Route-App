@@ -8,12 +8,14 @@ import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.example.todo.R
-import com.example.todo.adapters.CalendarDayContainer
-import com.example.todo.adapters.CalendarMonthHeaderContainer
 import com.example.todo.adapters.TaskAdapter
+import com.example.todo.adapters.calendar.CalendarDayContainer
+import com.example.todo.adapters.calendar.CalendarMonthHeaderContainer
+import com.example.todo.database.TaskDatabase
+import com.example.todo.database.entity.Task
 import com.example.todo.databinding.FragmentTodoTasksBinding
-import com.example.todo.db.Task
-import com.example.todo.db.TaskDatabase
+import com.example.todo.utils.clearTime
+import com.example.todo.utils.setDate
 import com.kizitonwose.calendar.core.Week
 import com.kizitonwose.calendar.core.WeekDay
 import com.kizitonwose.calendar.core.atStartOfMonth
@@ -24,13 +26,14 @@ import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.TextStyle
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 
 
 class TodoTasksFragment : Fragment() {
     private lateinit var binding: FragmentTodoTasksBinding
     private lateinit var calendar: Calendar
-    private var selectedDate: WeekDay? = null
+    private var selectedDate: LocalDate? = null
     lateinit var adapter: TaskAdapter
 
     override fun onCreateView(
@@ -100,7 +103,7 @@ class TodoTasksFragment : Fragment() {
                             data.date.dayOfMonth.toString()
                     }
 
-                    if (selectedDate == data) {
+                    if (selectedDate == data.date) {
                         container.apply {
                             dayWeekTv.setTextColor(selectedColor)
                             dayMonthTv.setTextColor(selectedColor)
@@ -112,17 +115,17 @@ class TodoTasksFragment : Fragment() {
                         }
                     }
                     container.view.setOnClickListener {
-                        selectedDate = data
+                        selectedDate = data.date
                         binding.calendarView.notifyWeekChanged(data)
 
                         val dayOfMonth = data.date.dayOfMonth
-                        val month = data.date.month.value
+                        val month = data.date.month.value - 1
                         val year = data.date.year
                         calendar.apply {
-                            set(Calendar.DAY_OF_MONTH, dayOfMonth)
-                            set(Calendar.MONTH, month)
-                            set(Calendar.YEAR, year)
+                            setDate(dayOfMonth, month, year)
+                            clearTime()
                         }
+                        getUpdatedTaskList(calendar.time)
                     }
                 }
             }
@@ -133,13 +136,23 @@ class TodoTasksFragment : Fragment() {
         }
     }
 
+    private fun getUpdatedTaskList(date: Date) {
+        val filteredTaskList = filterTaskByDate(date)
+        adapter.updateData(filteredTaskList)
+    }
+
+    private fun filterTaskByDate(date: Date): List<Task> {
+        return TaskDatabase.getINSTANCE(requireContext())
+            .getTaskDAO().getTaskByDate(date)
+    }
+
     private fun initRecyclerView() {
-        val tasksList = getAllTasks()
+        val tasksList = getAllTasksFromDataBase()
         adapter = TaskAdapter(tasksList)
         binding.rvTasks.adapter = adapter
     }
 
-    fun getAllTasks(): List<Task> {
+    fun getAllTasksFromDataBase(): List<Task> {
         return TaskDatabase.getINSTANCE(requireContext()).getTaskDAO().getAllTasks()
     }
 

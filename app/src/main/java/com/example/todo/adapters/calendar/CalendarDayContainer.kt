@@ -1,4 +1,4 @@
-package com.example.todo.adapters
+package com.example.todo.adapters.calendar
 
 import android.view.View
 import android.widget.TextView

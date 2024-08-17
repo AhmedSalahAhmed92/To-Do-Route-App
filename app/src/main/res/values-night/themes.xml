@@ -15,7 +15,7 @@
 
     <style name="Base.Theme.ToDo.SplashScreen">
         <item name="android:statusBarColor">@color/black_blue</item>
-        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightStatusBar">false</item>
     </style>
 
     <style name="main_background_color">

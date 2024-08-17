@@ -33,9 +33,15 @@ class HomeActivity : AppCompatActivity() {
             bottomNavigation.apply {
                 setOnItemSelectedListener {
                     when (it.itemId) {
-                        R.id.nav_tasks_list -> showFragment(tasksListFragment)
+                        R.id.nav_tasks_list -> {
+                            showFragment(tasksListFragment)
+                            binding.title.setText(R.string.to_do_list)
+                        }
 
-                        R.id.nav_settings -> showFragment(settingsFragment)
+                        R.id.nav_settings -> {
+                            showFragment(settingsFragment)
+                            binding.title.setText(R.string.settings)
+                        }
                     }
                     return@setOnItemSelectedListener true
                 }
@@ -55,13 +61,13 @@ class HomeActivity : AppCompatActivity() {
         binding.fabAddTask.setOnClickListener {
             val bottomSheet = AddTaskBottomSheet()
             bottomSheet.onAddedTaskListener = onTaskAddedListener()
-            bottomSheet.show(supportFragmentManager, null)
+            bottomSheet.show(supportFragmentManager, "add_task_bottom_sheet")
         }
     }
 
     private fun onTaskAddedListener() = object : OnTaskAddedListener {
         override fun onTaskAdded() {
-            if (tasksListFragment.isVisible) tasksListFragment.getAllTasks()
+            if (tasksListFragment.isVisible) tasksListFragment.getAllTasksFromDataBase()
         }
     }
 }

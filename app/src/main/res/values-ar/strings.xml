@@ -15,4 +15,5 @@
     <string name="title_is_required">Title is required</string>
     <string name="details_is_required">Details is required</string>
     <string name="required">*Required</string>
+    <string name="select_task_time">Select Task Time :</string>
 </resources>

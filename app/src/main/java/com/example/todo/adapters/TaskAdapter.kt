@@ -4,16 +4,21 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.example.todo.database.entity.Task
 import com.example.todo.databinding.ItemTaskBinding
-import com.example.todo.db.Task
 
-class TaskAdapter(private val tasksList: List<Task>) : Adapter<TaskAdapter.TaskViewHolder>() {
+class TaskAdapter(private var tasksList: List<Task>) : Adapter<TaskAdapter.TaskViewHolder>() {
 
     class TaskViewHolder(private val binding: ItemTaskBinding) : ViewHolder(binding.root) {
         fun bind(task: Task) {
             binding.tvTaskTitle.text = task.title
-            binding.tvTaskDate.text = task.date.toString()
+            binding.tvTaskTime.text = task.time
         }
+    }
+
+    fun updateData(tasks: List<Task>) {
+        tasksList = tasks
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
