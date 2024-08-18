@@ -37,7 +37,8 @@ class TodoTasksFragment : Fragment() {
     private lateinit var adapter: TaskAdapter
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentTodoTasksBinding.inflate(inflater, container, false)

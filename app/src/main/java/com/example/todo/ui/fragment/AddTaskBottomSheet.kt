@@ -31,7 +31,7 @@ class AddTaskBottomSheet : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentAddTaskBinding.inflate(layoutInflater)
+        binding = FragmentAddTaskBinding.inflate(inflater, container, false)
         return binding.root
     }
 

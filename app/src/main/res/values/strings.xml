@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <string name="app_name">To Do</string>
     <string name="splash_screen_logo">Splash screen logo</string>
     <string name="splash_screen_credit">Splash screen credit</string>
@@ -19,8 +19,14 @@
     <string name="time_is_required">*Time is required</string>
     <string name="language">Language</string>
     <string name="mode">Mode</string>
-    <array name="language_list" tools:ignore="InconsistentArrays">
+    <string name="arabic">Arabic</string>
+    <string name="english">English</string>
+    <string-array name="language_options">
         <item>English</item>
         <item>Arabic</item>
-    </array>
+    </string-array>
+    <string-array name="mode_options">
+        <item>Light</item>
+        <item>Dark</item>
+    </string-array>
 </resources>

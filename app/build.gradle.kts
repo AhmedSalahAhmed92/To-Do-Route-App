@@ -50,8 +50,11 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     ksp(libs.androidx.room.compiler)
     // Calender View
-    implementation("com.kizitonwose.calendar:view:2.5.4")
+    implementation(libs.view)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    debugImplementation("com.squareup.leakcanary:leakcanary-android:2.14")
+    releaseImplementation("com.squareup.leakcanary:leakcanary-android:2.14")
 }
