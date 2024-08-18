@@ -18,4 +18,6 @@
     <string name="select_task_time">Select Task Time :</string>
     <string name="date_is_required">*Date is required</string>
     <string name="time_is_required">*Time is required</string>
+    <string name="language">Language</string>
+    <string name="mode">Mode</string>
 </resources>

@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">To Do</string>
     <string name="splash_screen_logo">Splash screen logo</string>
     <string name="splash_screen_credit">Splash screen credit</string>
@@ -6,7 +6,6 @@
     <string name="floating_action_button">Floating action button</string>
     <string name="tasks">Tasks</string>
     <string name="settings">Settings</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="add_new_task">Add New Task</string>
     <string name="select_date">Select Task Date :</string>
     <string name="add_task">Add Task</string>
@@ -15,9 +14,13 @@
     <string name="title_is_required">*Title is required</string>
     <string name="details_is_required">*Details is required</string>
     <string name="required">*Required</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="select_task_time">Select Task Time :</string>
     <string name="date_is_required">*Date is required</string>
     <string name="time_is_required">*Time is required</string>
+    <string name="language">Language</string>
+    <string name="mode">Mode</string>
+    <array name="language_list" tools:ignore="InconsistentArrays">
+        <item>English</item>
+        <item>Arabic</item>
+    </array>
 </resources>
