@@ -14,11 +14,14 @@ import com.example.todo.database.entity.Task
 import com.example.todo.databinding.FragmentAddTaskBinding
 import com.example.todo.utils.Constants.Companion.getTodayDate
 import com.example.todo.utils.clearTime
+import com.example.todo.utils.setDate
+import com.example.todo.utils.setTime
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import java.util.Calendar
 
 class AddTaskBottomSheet : BottomSheetDialogFragment() {
-    private lateinit var binding: FragmentAddTaskBinding
+    private var _binding: FragmentAddTaskBinding? = null
+    private val binding get() = _binding!!
     private lateinit var calendar: Calendar
     private lateinit var taskTitle: String
     private lateinit var taskDetails: String
@@ -31,7 +34,7 @@ class AddTaskBottomSheet : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentAddTaskBinding.inflate(inflater, container, false)
+        _binding = FragmentAddTaskBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -98,7 +101,7 @@ class AddTaskBottomSheet : BottomSheetDialogFragment() {
     private fun validateDate(): Boolean {
         if (!isDateSelected) {
             Toast.makeText(
-                requireContext().applicationContext,
+                requireContext(),
                 getString(R.string.date_is_required),
                 Toast.LENGTH_SHORT
             ).show()
@@ -110,7 +113,7 @@ class AddTaskBottomSheet : BottomSheetDialogFragment() {
     private fun validateTime(): Boolean {
         if (!isTimeSelected) {
             Toast.makeText(
-                requireContext().applicationContext,
+                requireContext(),
                 getString(R.string.time_is_required),
                 Toast.LENGTH_SHORT
             ).show()
@@ -127,18 +130,14 @@ class AddTaskBottomSheet : BottomSheetDialogFragment() {
             time = binding.tvSelectedTimeValue.text.toString(),
             isDone = false
         )
-        TaskDatabase.getINSTANCE(requireContext().applicationContext).getTaskDAO().insertTask(task)
+        TaskDatabase.getINSTANCE(requireContext()).getTaskDAO().insertTask(task)
     }
 
     private fun showDatePickerDialog() {
-        val datePickerDialog = DatePickerDialog(requireContext().applicationContext)
+        val datePickerDialog = DatePickerDialog(requireContext())
         datePickerDialog.setOnDateSetListener { view, year, month, dayOfMonth ->
             isDateSelected = true
-            calendar.apply {
-                set(Calendar.YEAR, year)
-                set(Calendar.MONTH, month)
-                set(Calendar.DAY_OF_MONTH, dayOfMonth)
-            }
+            calendar.setDate(dayOfMonth, month, year)
             displaySelectedDate(dayOfMonth, month, year)
         }
         datePickerDialog.show()
@@ -151,13 +150,10 @@ class AddTaskBottomSheet : BottomSheetDialogFragment() {
 
     private fun showTimePickerDialog() {
         val timePickerDialog = TimePickerDialog(
-            requireContext().applicationContext,
+            requireContext(),
             { view, hourOfDay, minute ->
                 isTimeSelected = true
-                calendar.apply {
-                    set(Calendar.HOUR_OF_DAY, hourOfDay)
-                    set(Calendar.MINUTE, minute)
-                }
+                calendar.setTime(hourOfDay, minute)
                 displaySelectedTime(hourOfDay, minute)
             },
             calendar.get(Calendar.HOUR_OF_DAY),
@@ -170,10 +166,22 @@ class AddTaskBottomSheet : BottomSheetDialogFragment() {
     private fun displaySelectedTime(hourOfDay: Int, minute: Int) {
         var hour = hourOfDay % 12
         if (hour == 0) hour = 12
-        val amOrPm = if (hourOfDay < 12) "AM" else "PM"
+        val amOrPm = if (hourOfDay < 12) AM else PM
         val showTimeFormat = "$hour:$minute $amOrPm"
         binding.tvSelectedTimeValue.text = showTimeFormat
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding.tvSelectDate.setOnClickListener(null)
+        binding.tvSelectTime.setOnClickListener(null)
+        binding.btnAddTask.setOnClickListener(null)
+        _binding = null
+    }
+
+    companion object {
+        const val AM = "AM"
+        const val PM = "PM"
+    }
 
 }

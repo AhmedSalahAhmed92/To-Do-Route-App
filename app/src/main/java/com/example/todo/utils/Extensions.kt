@@ -9,6 +9,11 @@ fun Calendar.clearTime() {
     set(Calendar.MILLISECOND, 0)
 }
 
+fun Calendar.setTime(hourOfDay: Int, minute: Int) {
+    set(Calendar.HOUR_OF_DAY, hourOfDay)
+    set(Calendar.MINUTE, minute)
+}
+
 fun Calendar.setDate(dayOfMonth: Int, month: Int, year: Int) {
     set(Calendar.DAY_OF_MONTH, dayOfMonth)
     set(Calendar.MONTH, month)

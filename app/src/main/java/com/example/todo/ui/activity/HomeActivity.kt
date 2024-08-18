@@ -11,16 +11,16 @@ import com.example.todo.ui.fragment.TodoSettingsFragment
 import com.example.todo.ui.fragment.TodoTasksFragment
 
 class HomeActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityHomeBinding
+    private var _binding: ActivityHomeBinding? = null
+    private val binding get() = _binding!!
     private lateinit var tasksListFragment: TodoTasksFragment
     private lateinit var settingsFragment: TodoSettingsFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityHomeBinding.inflate(layoutInflater)
+        _binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
         intFragment()
-
         bottomNavigation()
     }
 
@@ -63,7 +63,7 @@ class HomeActivity : AppCompatActivity() {
             if (settingsFragment.isVisible) return@setOnClickListener
             val bottomSheet = AddTaskBottomSheet()
             bottomSheet.onAddedTaskListener = onTaskAddedListener()
-            bottomSheet.show(supportFragmentManager, "add_task_bottom_sheet")
+            bottomSheet.show(supportFragmentManager, null)
         }
     }
 
@@ -76,4 +76,12 @@ class HomeActivity : AppCompatActivity() {
                     tasksListFragment.getUpdatedTaskList(tasksListFragment.calendar.time)
         }
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding.bottomNavigation.setOnItemSelectedListener(null)
+        binding.fabAddTask.setOnClickListener(null)
+        _binding = null
+    }
+
 }

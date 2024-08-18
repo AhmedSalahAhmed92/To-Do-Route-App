@@ -6,95 +6,150 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import androidx.core.app.ActivityCompat.recreate
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import com.example.todo.R
 import com.example.todo.databinding.FragmentTodoSettingsBinding
 import java.util.Locale
 
 class TodoSettingsFragment : Fragment() {
-    private lateinit var binding: FragmentTodoSettingsBinding
+    private var _binding: FragmentTodoSettingsBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentTodoSettingsBinding.inflate(inflater, container, false)
+        _binding = FragmentTodoSettingsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupExposedDropdownMenu()
-
-
-//        binding.languageAcTv.doOnTextChanged { text, start, before, count ->
-//            activeArabicLanguage(
-//                when (text.toString()) {
-//                    resources.getString(R.string.arabic) -> true
-//                    else -> false
-//                }
-//            )
-//        }
+        displayCurrentLanguage()
+        displayCurrentMode()
+        selectLanguages()
+        selectModes()
     }
 
-    private fun setupExposedDropdownMenu() {
-        initLanguagesExposedDropdownMenu()
-        initModesExposedDropdownMenu()
-        //initPopulationMenu()
+    private fun displayCurrentLanguage() {
+        if (Locale.getDefault().language == ENGLISH_LANGUAGE_CODE)
+            binding.languageInput.setText(resources.getString(R.string.english))
+        else
+            binding.languageInput.setText(resources.getString(R.string.arabic))
     }
 
-    private fun initLanguagesExposedDropdownMenu() {
-        // Set up the language dropdown menu
+    private fun displayCurrentMode() {
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES)
+            binding.modeInput.setText(resources.getString(R.string.dark_mode))
+        else
+            binding.modeInput.setText(resources.getString(R.string.light_mode))
+    }
+
+    private fun selectLanguages() {
+        initLanguageExposedDropDownMenuAdapter()
+        binding.languageInput.setOnItemClickListener { parent, view, position, id ->
+            when (position) {
+                0 -> selectLanguageToEnglish(this)
+                1 -> selectLanguageToArabic(this)
+            }
+        }
+    }
+
+    private fun initLanguageExposedDropDownMenuAdapter() {
         val languages = resources.getStringArray(R.array.language_options)
-        val languageAdapter = ArrayAdapter(
-            requireContext().applicationContext,
-            R.layout.item_settings_language_dropdown_menu,
+        val adapter = ArrayAdapter(
+            requireContext(),
+            R.layout.item_drop_down_menu,
             languages
         )
-        binding.languageInput.setAdapter(languageAdapter)
+        binding.languageInput.setAdapter(adapter)
     }
 
-    private fun initModesExposedDropdownMenu() {
-        // Set up the mode dropdown menu
+    private fun selectLanguageToEnglish(fragment: Fragment) {
+        val currentLanguage = setLocal(ENGLISH_LANGUAGE_CODE)
+        val configuration = fragment.requireActivity().resources.configuration
+        configuration.setLocale(currentLanguage)
+        fragment.requireActivity().resources.updateConfiguration(
+            configuration,
+            resources.displayMetrics
+        )
+    }
+
+    private fun selectLanguageToArabic(fragment: Fragment) {
+        val currentLanguage = setLocal(ARABIC_LANGUAGE_CODE)
+        val configuration = fragment.requireActivity().resources.configuration
+        configuration.setLocale(currentLanguage)
+        fragment.requireActivity().resources.updateConfiguration(
+            configuration,
+            resources.displayMetrics
+        )
+    }
+
+    private fun setLocal(language: String): Locale {
+        val local = Locale(language)
+        Locale.setDefault(local)
+        requireActivity().recreate()
+        return local
+    }
+
+    private fun selectModes() {
+        initModeExposedDropDownMenuAdapter()
+        binding.modeInput.setOnItemClickListener { parent, view, position, id ->
+            when (position) {
+                0 -> selectLightMode(this)
+                1 -> selectDarkMode(this)
+            }
+        }
+    }
+
+    private fun initModeExposedDropDownMenuAdapter() {
         val modes = resources.getStringArray(R.array.mode_options)
-        val modeAdapter = ArrayAdapter(
-            requireContext().applicationContext,
-            R.layout.item_settings_language_dropdown_menu,
+        val adapter = ArrayAdapter(
+            requireContext(),
+            R.layout.item_drop_down_menu,
             modes
         )
-        binding.languageInput.setAdapter(modeAdapter)
+        binding.modeInput.setAdapter(adapter)
     }
 
-    private fun initPopulationMenu() {
-        if (isArabic()) {
-            binding.languageInput.setText(resources.getString(R.string.arabic))
+
+    private fun selectLightMode(fragment: Fragment) {
+        val currentMode = fragment.requireActivity().resources.configuration.uiMode
+        val lightMode =
+            if (currentMode == Configuration.UI_MODE_NIGHT_YES)
+                AppCompatDelegate.MODE_NIGHT_NO
+            else
+                AppCompatDelegate.MODE_NIGHT_NO
+        AppCompatDelegate.setDefaultNightMode(lightMode)
+    }
+
+    private fun selectDarkMode(fragment: Fragment) {
+        val currentMode = fragment.requireActivity().resources.configuration.uiMode
+        val darkMode = if (currentMode == Configuration.UI_MODE_NIGHT_NO) {
+            AppCompatDelegate.MODE_NIGHT_YES
         } else {
-            binding.languageInput.setText(resources.getString(R.string.english))
+            AppCompatDelegate.MODE_NIGHT_YES
         }
+        AppCompatDelegate.setDefaultNightMode(darkMode)
     }
 
-    private fun activeArabicLanguage(action: Boolean) {
-        setLocale(if (action) "ar" else "en")
-        activity?.let { recreate(it) }
-    }
-
-    private fun isArabic(): Boolean {
-        return context?.resources?.configuration?.locales?.get(0)?.language == "ar"
-    }
-
-    private fun setLocale(language: String) {
-        val locale = Locale(language)
-        Locale.setDefault(locale)
-        val config = Configuration()
-        config.setLocale(locale)
-        activity?.let {
-            requireActivity().baseContext.resources.updateConfiguration(
-                config,
-                requireActivity().baseContext.resources.displayMetrics
-            )
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding.apply {
+            languageInput.setAdapter(null)
+            modeInput.setAdapter(null)
+            languageInput.onItemClickListener = null
+            modeInput.onItemClickListener = null
         }
+        _binding = null
+    }
+
+    ////////////////////////////////////////////
+    companion object {
+        const val ARABIC_LANGUAGE_CODE = "ar"
+        const val ENGLISH_LANGUAGE_CODE = "en"
     }
 }

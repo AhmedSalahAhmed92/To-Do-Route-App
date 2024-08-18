@@ -31,7 +31,8 @@ import java.util.Locale
 
 
 class TodoTasksFragment : Fragment() {
-    private lateinit var binding: FragmentTodoTasksBinding
+    private var _binding: FragmentTodoTasksBinding? = null
+    private val binding get() = _binding!!
     lateinit var calendar: Calendar
     var selectedDate: LocalDate? = null
     private lateinit var adapter: TaskAdapter
@@ -41,7 +42,7 @@ class TodoTasksFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentTodoTasksBinding.inflate(inflater, container, false)
+        _binding = FragmentTodoTasksBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -155,6 +156,11 @@ class TodoTasksFragment : Fragment() {
 
     fun getAllTasksFromDataBase(): List<Task> {
         return TaskDatabase.getINSTANCE(requireContext()).getTaskDAO().getAllTasks()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }

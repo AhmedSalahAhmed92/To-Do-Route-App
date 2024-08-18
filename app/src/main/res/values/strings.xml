@@ -21,6 +21,8 @@
     <string name="mode">Mode</string>
     <string name="arabic">Arabic</string>
     <string name="english">English</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="light_mode">Light Mode</string>
     <string-array name="language_options">
         <item>English</item>
         <item>Arabic</item>
