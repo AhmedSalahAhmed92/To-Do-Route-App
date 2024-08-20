@@ -19,7 +19,7 @@
             android:background="@color/blue">
 
             <TextView
-                android:id="@+id/title"
+                android:id="@+id/toolbar_title"
                 style="@style/toolbar_title_style"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

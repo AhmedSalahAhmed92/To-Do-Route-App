@@ -36,12 +36,12 @@ class HomeActivity : AppCompatActivity() {
                     when (it.itemId) {
                         R.id.nav_tasks_list -> {
                             showFragment(tasksListFragment)
-                            binding.title.setText(R.string.to_do_list)
+                            binding.toolbarTitle.setText(R.string.to_do_list)
                         }
 
                         R.id.nav_settings -> {
                             showFragment(settingsFragment)
-                            binding.title.setText(R.string.settings)
+                            binding.toolbarTitle.setText(R.string.settings)
                         }
                     }
                     return@setOnItemSelectedListener true

@@ -28,6 +28,10 @@
         <item name="android:textSize">22sp</item>
     </style>
 
+    <style name="toolbar_back_stack_arrow_color">
+        <item name="android:tint">@color/white</item>
+    </style>
+
     <style name="calendar_background_color">
         <item name="android:background">@drawable/calendar_shape_bg</item>
     </style>

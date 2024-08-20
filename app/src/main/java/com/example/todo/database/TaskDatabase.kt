@@ -11,7 +11,7 @@ import com.example.todo.database.typeConverters.DateConverter
 
 @Database(
     entities = [Task::class],
-    version = 2
+    version = 2,
 )
 @TypeConverters(DateConverter::class)
 abstract class TaskDatabase : RoomDatabase() {
@@ -32,6 +32,7 @@ abstract class TaskDatabase : RoomDatabase() {
                     .allowMainThreadQueries()
                     .build()
             }
+            INSTANCE!!.openHelper.writableDatabase
             return INSTANCE!!
         }
     }

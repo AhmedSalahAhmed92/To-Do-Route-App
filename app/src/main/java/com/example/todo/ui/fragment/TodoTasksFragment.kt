@@ -1,5 +1,6 @@
 package com.example.todo.ui.fragment
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,15 +12,19 @@ import com.example.todo.R
 import com.example.todo.adapters.TaskAdapter
 import com.example.todo.adapters.calendar.CalendarDayContainer
 import com.example.todo.adapters.calendar.CalendarMonthHeaderContainer
+import com.example.todo.callbacks.OnTaskClickListener
 import com.example.todo.database.TaskDatabase
 import com.example.todo.database.entity.Task
 import com.example.todo.databinding.FragmentTodoTasksBinding
+import com.example.todo.ui.activity.EditTaskActivity
+import com.example.todo.utils.Constants.Companion.EXTRA_TASK_CONTENT
 import com.example.todo.utils.clearTime
 import com.example.todo.utils.setDate
 import com.kizitonwose.calendar.core.Week
 import com.kizitonwose.calendar.core.WeekDay
 import com.kizitonwose.calendar.core.atStartOfMonth
 import com.kizitonwose.calendar.core.firstDayOfWeekFromLocale
+import com.kizitonwose.calendar.core.yearMonth
 import com.kizitonwose.calendar.view.WeekDayBinder
 import com.kizitonwose.calendar.view.WeekHeaderFooterBinder
 import java.time.LocalDate
@@ -51,6 +56,7 @@ class TodoTasksFragment : Fragment() {
         calendar = Calendar.getInstance()
         initWeekCalendarAdapter()
         initRecyclerView()
+        navigateToEditTaskActivity()
     }
 
     private fun initWeekCalendarAdapter() {
@@ -77,7 +83,10 @@ class TodoTasksFragment : Fragment() {
             object : WeekHeaderFooterBinder<CalendarMonthHeaderContainer> {
                 override fun bind(container: CalendarMonthHeaderContainer, data: Week) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        val monthName = data.days.first().date.month.name
+                        val monthName = data.days.first().date.yearMonth.month.getDisplayName(
+                            TextStyle.FULL,
+                            Locale.getDefault()
+                        )
                         val year = data.days.first().date.year.toString()
                         val calendarHeaderTitle = "$monthName - $year"
                         container.monthHeaderTitleTv.text = calendarHeaderTitle
@@ -156,6 +165,16 @@ class TodoTasksFragment : Fragment() {
 
     fun getAllTasksFromDataBase(): List<Task> {
         return TaskDatabase.getINSTANCE(requireContext()).getTaskDAO().getAllTasks()
+    }
+
+    private fun navigateToEditTaskActivity() {
+        adapter.onTaskClickListener = object : OnTaskClickListener {
+            override fun onTaskClick(task: Task, taskPosition: Int) {
+                val intent = Intent(requireContext(), EditTaskActivity::class.java)
+                intent.putExtra(EXTRA_TASK_CONTENT, task)
+                startActivity(intent)
+            }
+        }
     }
 
     override fun onDestroyView() {
