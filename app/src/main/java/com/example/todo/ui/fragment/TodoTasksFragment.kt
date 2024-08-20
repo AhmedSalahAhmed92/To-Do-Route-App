@@ -13,6 +13,7 @@ import com.example.todo.adapters.TaskAdapter
 import com.example.todo.adapters.calendar.CalendarDayContainer
 import com.example.todo.adapters.calendar.CalendarMonthHeaderContainer
 import com.example.todo.callbacks.OnTaskClickListener
+import com.example.todo.callbacks.OnTaskDeleteListener
 import com.example.todo.database.TaskDatabase
 import com.example.todo.database.entity.Task
 import com.example.todo.databinding.FragmentTodoTasksBinding
@@ -53,16 +54,26 @@ class TodoTasksFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        calendar = Calendar.getInstance()
+
+        initViews()
+    }
+
+    private fun initViews() {
         initWeekCalendarAdapter()
         initRecyclerView()
         navigateToEditTaskActivity()
+        deleteToDoTask()
     }
 
     private fun initWeekCalendarAdapter() {
+        initCalendar()
         setupWeekCalendarView()
         bindMonthYearCalendarView()
         bindWeekCalendarView()
+    }
+
+    private fun initCalendar() {
+        calendar = Calendar.getInstance()
     }
 
     private fun setupWeekCalendarView() {
@@ -173,6 +184,16 @@ class TodoTasksFragment : Fragment() {
                 val intent = Intent(requireContext(), EditTaskActivity::class.java)
                 intent.putExtra(EXTRA_TASK_CONTENT, task)
                 startActivity(intent)
+            }
+        }
+    }
+
+    private fun deleteToDoTask() {
+        adapter.OnTaskDeleteListener = object : OnTaskDeleteListener {
+            override fun onTaskDelete(task: Task, taskPosition: Int) {
+                TaskDatabase.getINSTANCE(requireContext()).getTaskDAO().deleteTask(task)
+                adapter.deleteItem(taskPosition)
+                adapter.itemCount
             }
         }
     }
