@@ -27,6 +27,7 @@
     <string name="edit_task">Edit Task</string>
     <string name="save_changes">Save Changes</string>
     <string name="delete">Delete</string>
+    <string name="done">Done!</string>
     <string-array name="language_options">
         <item>English</item>
         <item>Arabic</item>

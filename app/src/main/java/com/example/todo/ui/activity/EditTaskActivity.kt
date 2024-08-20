@@ -178,6 +178,13 @@ class EditTaskActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        DatePickerDialog(this).setOnDateSetListener(null)
+        binding.toolbarBackButton.setOnClickListener(null)
+        binding.content.apply {
+            tvSelectedDateValue.setOnClickListener(null)
+            tvSelectedTimeValue.setOnClickListener(null)
+            btnSave.setOnClickListener(null)
+        }
         _binding = null
     }
 }

@@ -38,9 +38,12 @@ class AddTaskBottomSheet : BottomSheetDialogFragment() {
         return binding.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initViews()
+    }
+
+    private fun initViews() {
         initCalendar()
         //displayCurrentDate()
         onSelectDateClick()
@@ -173,9 +176,13 @@ class AddTaskBottomSheet : BottomSheetDialogFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding.tvSelectDate.setOnClickListener(null)
-        binding.tvSelectTime.setOnClickListener(null)
-        binding.btnAddTask.setOnClickListener(null)
+        DatePickerDialog(requireContext(), null, 0, 0, 0).dismiss()
+        TimePickerDialog(requireContext(), null, 0, 0, false).dismiss()
+        binding.apply {
+            tvSelectDate.setOnClickListener(null)
+            tvSelectTime.setOnClickListener(null)
+            btnAddTask.setOnClickListener(null)
+        }
         _binding = null
     }
 

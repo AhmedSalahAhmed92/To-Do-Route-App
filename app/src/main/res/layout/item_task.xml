@@ -73,13 +73,16 @@
                 app:layout_constraintTop_toTopOf="@id/view_separator"
                 tools:text="Play with friends" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/ic_clock_color"
                 android:id="@+id/tv_task_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawablePadding="8dp"
                 android:padding="10dp"
-                app:drawableStartCompat="@drawable/ic_time"
+                android:fontFamily="@font/poppins_bold"
+                android:textSize="14sp"
+                app:drawableStartCompat="@drawable/ic_clock"
                 app:layout_constraintBottom_toBottomOf="@id/view_separator"
                 app:layout_constraintStart_toStartOf="@+id/tv_task_title"
                 app:layout_constraintTop_toBottomOf="@id/tv_task_title"
@@ -95,6 +98,23 @@
                 android:paddingHorizontal="30dp"
                 android:paddingVertical="10dp"
                 android:src="@drawable/ic_check"
+                app:layout_constraintBottom_toBottomOf="@id/view_separator"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/view_separator" />
+
+            <TextView
+                android:id="@+id/tv_check_isDone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="2dp"
+                android:fontFamily="@font/poppins_bold"
+                android:paddingHorizontal="30dp"
+                android:paddingVertical="10dp"
+                android:text="@string/done"
+                android:textColor="@color/green"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@id/view_separator"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/view_separator" />

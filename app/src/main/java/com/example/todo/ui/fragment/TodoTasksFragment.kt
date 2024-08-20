@@ -12,6 +12,7 @@ import com.example.todo.R
 import com.example.todo.adapters.TaskAdapter
 import com.example.todo.adapters.calendar.CalendarDayContainer
 import com.example.todo.adapters.calendar.CalendarMonthHeaderContainer
+import com.example.todo.callbacks.OnTaskCheckListener
 import com.example.todo.callbacks.OnTaskClickListener
 import com.example.todo.callbacks.OnTaskDeleteListener
 import com.example.todo.database.TaskDatabase
@@ -54,7 +55,6 @@ class TodoTasksFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initViews()
     }
 
@@ -62,6 +62,7 @@ class TodoTasksFragment : Fragment() {
         initWeekCalendarAdapter()
         initRecyclerView()
         navigateToEditTaskActivity()
+        checkToDoTask()
         deleteToDoTask()
     }
 
@@ -188,8 +189,22 @@ class TodoTasksFragment : Fragment() {
         }
     }
 
+    private fun checkToDoTask() {
+        adapter.onTaskCheckListener = object : OnTaskCheckListener {
+            override fun onTaskCheck(task: Task, taskPosition: Int) {
+                adapter.checkItem(task)
+            }
+        }
+        taskIsDone()
+    }
+
+    private fun taskIsDone() {
+        val tasks = Task(isDone = true)
+        TaskDatabase.getINSTANCE(requireContext()).getTaskDAO().updateTask(tasks)
+    }
+
     private fun deleteToDoTask() {
-        adapter.OnTaskDeleteListener = object : OnTaskDeleteListener {
+        adapter.onTaskDeleteListener = object : OnTaskDeleteListener {
             override fun onTaskDelete(task: Task, taskPosition: Int) {
                 TaskDatabase.getINSTANCE(requireContext()).getTaskDAO().deleteTask(task)
                 adapter.deleteItem(taskPosition)
@@ -200,7 +215,11 @@ class TodoTasksFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        adapter.apply {
+            onTaskCheckListener = null
+            onTaskClickListener = null
+            onTaskDeleteListener = null
+        }
         _binding = null
     }
-
 }

@@ -28,6 +28,10 @@ class TodoSettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initViews()
+    }
+
+    private fun initViews() {
         displayCurrentLanguage()
         displayCurrentMode()
         selectLanguages()
@@ -82,6 +86,7 @@ class TodoSettingsFragment : Fragment() {
         val currentLanguage = setLocal(ARABIC_LANGUAGE_CODE)
         val configuration = fragment.requireActivity().resources.configuration
         configuration.setLocale(currentLanguage)
+        configuration.setLayoutDirection(currentLanguage)
         fragment.requireActivity().resources.updateConfiguration(
             configuration,
             resources.displayMetrics

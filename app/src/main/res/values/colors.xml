@@ -17,4 +17,5 @@
     <color name="calendar_txt">@color/black_blue</color>
     <color name="item_task_bg">@color/white</color>
     <color name="red">#FF0000</color>
+    <color name="green">#61E757</color>
 </resources>

@@ -20,6 +20,10 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        initViews()
+    }
+
+    private fun initViews() {
         intFragment()
         bottomNavigation()
     }
