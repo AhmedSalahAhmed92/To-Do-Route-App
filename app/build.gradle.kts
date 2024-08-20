@@ -51,6 +51,8 @@ dependencies {
     ksp(libs.androidx.room.compiler)
     // Calender View
     implementation(libs.view)
+    //swipe to delete zerobranch
+    implementation(libs.swipelayout)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

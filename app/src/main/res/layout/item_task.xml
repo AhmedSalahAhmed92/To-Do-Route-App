@@ -10,60 +10,95 @@
     app:cardBackgroundColor="@color/item_task_bg"
     app:cardCornerRadius="15dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.zerobranch.layout.SwipeLayout
+        android:id="@+id/swipe_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="10dp">
+        android:layout_height="wrap_content"
+        app:draggedItem="@id/constraint_layout_task"
+        app:isFreeDragAfterOpen="false"
+        app:isTogether="true"
+        app:leftItem="@id/layout_delete"
+        app:swipeDirection="right">
 
-        <View
-            android:id="@+id/view_separator"
-            android:layout_width="4dp"
-            android:layout_height="0dp"
-            android:layout_marginHorizontal="8dp"
-            android:background="@drawable/status_box_shape_bg"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHeight_percent="0.8"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_task_title"
+        <LinearLayout
+            android:id="@+id/layout_delete"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:fontFamily="@font/poppins_bold"
-            android:padding="8dp"
-            android:textColor="@color/blue"
-            android:textSize="18sp"
-            app:layout_constraintStart_toEndOf="@+id/view_separator"
-            app:layout_constraintTop_toTopOf="@id/view_separator"
-            tools:text="Play with friends" />
+            android:layout_height="match_parent"
+            android:background="@color/red"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingHorizontal="30dp">
 
-        <TextView
-            android:id="@+id/tv_task_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawablePadding="8dp"
-            android:padding="10dp"
-            app:drawableStartCompat="@drawable/ic_time"
-            app:layout_constraintBottom_toBottomOf="@id/view_separator"
-            app:layout_constraintStart_toStartOf="@+id/tv_task_title"
-            app:layout_constraintTop_toBottomOf="@id/tv_task_title"
-            app:layout_constraintVertical_bias="0.0"
-            tools:text="10:55 AM" />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:tint="@color/white"
+                app:srcCompat="@drawable/ic_delete" />
 
-        <ImageView
-            android:id="@+id/imv_check"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="2dp"
-            android:background="@drawable/status_box_shape_bg"
-            android:paddingHorizontal="30dp"
-            android:paddingVertical="10dp"
-            android:src="@drawable/ic_check"
-            app:layout_constraintBottom_toBottomOf="@id/view_separator"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/view_separator" />
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingVertical="10dp"
+                android:text="@string/delete"
+                android:textColor="@color/white" />
+        </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraint_layout_task"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp">
+
+            <View
+                android:id="@+id/view_separator"
+                android:layout_width="4dp"
+                android:layout_height="0dp"
+                android:layout_marginHorizontal="8dp"
+                android:background="@drawable/status_box_shape_bg"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHeight_percent="0.8"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_task_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/poppins_bold"
+                android:padding="8dp"
+                android:textColor="@color/blue"
+                android:textSize="18sp"
+                app:layout_constraintStart_toEndOf="@+id/view_separator"
+                app:layout_constraintTop_toTopOf="@id/view_separator"
+                tools:text="Play with friends" />
+
+            <TextView
+                android:id="@+id/tv_task_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="8dp"
+                android:padding="10dp"
+                app:drawableStartCompat="@drawable/ic_time"
+                app:layout_constraintBottom_toBottomOf="@id/view_separator"
+                app:layout_constraintStart_toStartOf="@+id/tv_task_title"
+                app:layout_constraintTop_toBottomOf="@id/tv_task_title"
+                app:layout_constraintVertical_bias="0.0"
+                tools:text="10:55 AM" />
+
+            <ImageView
+                android:id="@+id/imv_check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="2dp"
+                android:background="@drawable/status_box_shape_bg"
+                android:paddingHorizontal="30dp"
+                android:paddingVertical="10dp"
+                android:src="@drawable/ic_check"
+                app:layout_constraintBottom_toBottomOf="@id/view_separator"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/view_separator" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.zerobranch.layout.SwipeLayout>
 </com.google.android.material.card.MaterialCardView>
